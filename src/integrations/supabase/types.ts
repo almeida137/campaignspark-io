@@ -26,7 +26,7 @@ export type Database = {
           name: string
           notes: string | null
           objective: string | null
-          platform: string | null
+          platforms: string[] | null
           start_date: string | null
           status: Database["public"]["Enums"]["campaign_status"] | null
           updated_at: string | null
@@ -42,7 +42,7 @@ export type Database = {
           name: string
           notes?: string | null
           objective?: string | null
-          platform?: string | null
+          platforms?: string[] | null
           start_date?: string | null
           status?: Database["public"]["Enums"]["campaign_status"] | null
           updated_at?: string | null
@@ -58,7 +58,7 @@ export type Database = {
           name?: string
           notes?: string | null
           objective?: string | null
-          platform?: string | null
+          platforms?: string[] | null
           start_date?: string | null
           status?: Database["public"]["Enums"]["campaign_status"] | null
           updated_at?: string | null
@@ -113,6 +113,7 @@ export type Database = {
           contact_email: string | null
           contact_phone: string | null
           created_at: string | null
+          goals: string | null
           id: string
           monthly_budget: number | null
           name: string
@@ -126,6 +127,7 @@ export type Database = {
           contact_email?: string | null
           contact_phone?: string | null
           created_at?: string | null
+          goals?: string | null
           id?: string
           monthly_budget?: number | null
           name: string
@@ -139,6 +141,7 @@ export type Database = {
           contact_email?: string | null
           contact_phone?: string | null
           created_at?: string | null
+          goals?: string | null
           id?: string
           monthly_budget?: number | null
           name?: string
@@ -152,6 +155,7 @@ export type Database = {
       }
       roi_calculations: {
         Row: {
+          breakeven: number | null
           cac: number
           campaign_id: string | null
           conversion_rate: number
@@ -161,10 +165,12 @@ export type Database = {
           revenue: number
           roi: number
           sales: number
+          target_revenue: number | null
           ticket: number
           user_id: string
         }
         Insert: {
+          breakeven?: number | null
           cac: number
           campaign_id?: string | null
           conversion_rate: number
@@ -174,10 +180,12 @@ export type Database = {
           revenue: number
           roi: number
           sales: number
+          target_revenue?: number | null
           ticket: number
           user_id: string
         }
         Update: {
+          breakeven?: number | null
           cac?: number
           campaign_id?: string | null
           conversion_rate?: number
@@ -187,6 +195,7 @@ export type Database = {
           revenue?: number
           roi?: number
           sales?: number
+          target_revenue?: number | null
           ticket?: number
           user_id?: string
         }
