@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '@/integrations/supabase/client';
@@ -26,9 +25,12 @@ interface Client {
   created_at: string;
 }
 
+type ClientStatus = 'active' | 'paused' | 'closed';
+type StatusFilter = 'all' | ClientStatus;
+
 export default function Clients() {
   const [searchTerm, setSearchTerm] = useState('');
-  const [statusFilter, setStatusFilter] = useState<string>('all');
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>('all');
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingClient, setEditingClient] = useState<Client | null>(null);
   const { toast } = useToast();
@@ -41,7 +43,7 @@ export default function Clients() {
     contact_phone: '',
     monthly_budget: '',
     notes: '',
-    status: 'active' as const,
+    status: 'active' as ClientStatus,
   });
 
   // Buscar clientes
@@ -263,7 +265,7 @@ export default function Clients() {
                     <Label htmlFor="status">Status</Label>
                     <Select
                       value={formData.status}
-                      onValueChange={(value: any) => setFormData({ ...formData, status: value })}
+                      onValueChange={(value: ClientStatus) => setFormData({ ...formData, status: value })}
                     >
                       <SelectTrigger>
                         <SelectValue />
@@ -311,7 +313,7 @@ export default function Clients() {
               className="pl-10"
             />
           </div>
-          <Select value={statusFilter} onValueChange={setStatusFilter}>
+          <Select value={statusFilter} onValueChange={(value: StatusFilter) => setStatusFilter(value)}>
             <SelectTrigger className="w-48">
               <SelectValue placeholder="Filtrar por status" />
             </SelectTrigger>
