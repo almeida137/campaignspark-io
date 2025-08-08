@@ -14,7 +14,192 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      campaigns: {
+        Row: {
+          audience: string | null
+          budget: number | null
+          client_id: string
+          created_at: string | null
+          creatives: Json | null
+          end_date: string | null
+          id: string
+          name: string
+          notes: string | null
+          objective: string | null
+          platform: string | null
+          start_date: string | null
+          status: Database["public"]["Enums"]["campaign_status"] | null
+          updated_at: string | null
+        }
+        Insert: {
+          audience?: string | null
+          budget?: number | null
+          client_id: string
+          created_at?: string | null
+          creatives?: Json | null
+          end_date?: string | null
+          id?: string
+          name: string
+          notes?: string | null
+          objective?: string | null
+          platform?: string | null
+          start_date?: string | null
+          status?: Database["public"]["Enums"]["campaign_status"] | null
+          updated_at?: string | null
+        }
+        Update: {
+          audience?: string | null
+          budget?: number | null
+          client_id?: string
+          created_at?: string | null
+          creatives?: Json | null
+          end_date?: string | null
+          id?: string
+          name?: string
+          notes?: string | null
+          objective?: string | null
+          platform?: string | null
+          start_date?: string | null
+          status?: Database["public"]["Enums"]["campaign_status"] | null
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "campaigns_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      checklists: {
+        Row: {
+          campaign_id: string
+          created_at: string | null
+          id: string
+          items: Json | null
+          title: string
+          updated_at: string | null
+        }
+        Insert: {
+          campaign_id: string
+          created_at?: string | null
+          id?: string
+          items?: Json | null
+          title?: string
+          updated_at?: string | null
+        }
+        Update: {
+          campaign_id?: string
+          created_at?: string | null
+          id?: string
+          items?: Json | null
+          title?: string
+          updated_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "checklists_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      clients: {
+        Row: {
+          contact_email: string | null
+          contact_phone: string | null
+          created_at: string | null
+          id: string
+          monthly_budget: number | null
+          name: string
+          niche: string | null
+          notes: string | null
+          status: Database["public"]["Enums"]["client_status"] | null
+          updated_at: string | null
+          user_id: string
+        }
+        Insert: {
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string | null
+          id?: string
+          monthly_budget?: number | null
+          name: string
+          niche?: string | null
+          notes?: string | null
+          status?: Database["public"]["Enums"]["client_status"] | null
+          updated_at?: string | null
+          user_id: string
+        }
+        Update: {
+          contact_email?: string | null
+          contact_phone?: string | null
+          created_at?: string | null
+          id?: string
+          monthly_budget?: number | null
+          name?: string
+          niche?: string | null
+          notes?: string | null
+          status?: Database["public"]["Enums"]["client_status"] | null
+          updated_at?: string | null
+          user_id?: string
+        }
+        Relationships: []
+      }
+      roi_calculations: {
+        Row: {
+          cac: number
+          campaign_id: string | null
+          conversion_rate: number
+          created_at: string | null
+          id: string
+          investment: number
+          revenue: number
+          roi: number
+          sales: number
+          ticket: number
+          user_id: string
+        }
+        Insert: {
+          cac: number
+          campaign_id?: string | null
+          conversion_rate: number
+          created_at?: string | null
+          id?: string
+          investment: number
+          revenue: number
+          roi: number
+          sales: number
+          ticket: number
+          user_id: string
+        }
+        Update: {
+          cac?: number
+          campaign_id?: string | null
+          conversion_rate?: number
+          created_at?: string | null
+          id?: string
+          investment?: number
+          revenue?: number
+          roi?: number
+          sales?: number
+          ticket?: number
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "roi_calculations_campaign_id_fkey"
+            columns: ["campaign_id"]
+            isOneToOne: false
+            referencedRelation: "campaigns"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
@@ -23,7 +208,8 @@ export type Database = {
       [_ in never]: never
     }
     Enums: {
-      [_ in never]: never
+      campaign_status: "draft" | "active" | "paused" | "completed"
+      client_status: "active" | "paused" | "closed"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +336,9 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      campaign_status: ["draft", "active", "paused", "completed"],
+      client_status: ["active", "paused", "closed"],
+    },
   },
 } as const
